@@ -13,20 +13,23 @@ const options = {
     headers: headers,
 };
 
-async function getClientInfo() {
-    // fetch(`${api.baseUrl}personal/client-info`, options)
-    //   .then(response => response.json())
-    //   .then(result => console.log(result))
-    //   .catch(error => console.log('error', error));
-
+export async function getClientInfo() {
     const response = await fetch(`${api.baseUrl}personal/client-info`, options);
-    const responsBody = await response.json();
-    return responsBody;
+    return await response.json();
 }
 
-async function getStatement(account, from, to) {
+export async function getTransactions(account, from, to) {
     const response = await fetch(`${api.baseUrl}personal/statement/${account}/${from}/${to}`, options);
     const responseBody = await response.json();
+    const transactions = [];
 
-    return responseBody;
+    for (const item of responseBody) {
+        transactions.push({
+            id: item.id,
+            category: item.description,
+            amount: item.amount,
+        });
+    }
+
+    return transactions;
 }
