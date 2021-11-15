@@ -3,6 +3,17 @@ import { getClientInfo, getTransactions } from './integrations/mono.js';
 
 const app = express();
 
+app.get('/', async (req, res) => {
+    res.send(`
+      <body style="font-family: Arial; text-align: center">
+        <h1>Here will be docs!</h1>
+        <div style="display: flex; justify-content: center;">
+          <img src="https://raw.githubusercontent.com/DionysusBenstein/Hasbik/master/hasbik.jpg">
+        </div>
+      </body>
+    `);
+});
+
 app.get('/:bank/user/info', async (req, res) => {
     res.send(await getClientInfo());
 });
