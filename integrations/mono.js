@@ -11,19 +11,22 @@ headers.append("X-Token", api.xToken);
 const options = {
     method: 'GET',
     headers: headers,
-    redirect: 'follow'
 };
 
 async function getClientInfo() {
     // fetch(`${api.baseUrl}personal/client-info`, options)
-    //   .then(response => response.text())
+    //   .then(response => response.json())
     //   .then(result => console.log(result))
     //   .catch(error => console.log('error', error));
 
     const response = await fetch(`${api.baseUrl}personal/client-info`, options);
+    const responsBody = await response.json();
+    return responsBody;
+}
+
+async function getStatement(account, from, to) {
+    const response = await fetch(`${api.baseUrl}personal/statement/${account}/${from}/${to}`, options);
     const responseBody = await response.json();
 
     return responseBody;
 }
-
-console.log(getClientInfo());
