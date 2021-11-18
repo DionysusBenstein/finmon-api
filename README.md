@@ -46,6 +46,7 @@ Response Example (200 OK)
 [
   {
     "id": "ZuHWzqkKGVo=",
+    "time": 1554466347,
     "category": "Покупка говна",
     "amount": "-95000",
   }
@@ -67,6 +68,7 @@ Response Example (200 OK)
 [
   {
     "id": "TM0_tRHBTqsCe8j5",
+    "time": 1554466347,
     "category": "Техасская мазня говной",
     "amount": "-55000",
   }

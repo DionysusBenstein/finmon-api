@@ -30,6 +30,7 @@ export async function getTransactions(account, from, to) {
         for (const item of responseBody) {
             transactions.push({
                 id: item.id,
+                time: item.time,
                 category: item.description,
                 amount: item.amount,
             });
