@@ -36,10 +36,10 @@ Response Example (200 OK)
 ### PATH
 
 > GET /{bank}/transactions/{account}/{from}/{to}
-
+****
 
 ### DESCRIPTION
-Get transactions list in {bank} (for instance 'mono') for time from {from} to {to} Unix time format. Maximum time for which it is possible to receive a statement 31 days + 1 hour (2682000 seconds) Limit on the use of the function no more than once every 60 seconds.
+Get transactions list in {bank} (for instance 'mono') for time from {from} to {to} Unix time format. Maximum time for which it is possible to receive a statement 31 days + 1 hour (2682000 seconds). Limit on the use of the function no more than once every 60 seconds.
 
 Response Example (200 OK)
 ``` json
@@ -48,6 +48,27 @@ Response Example (200 OK)
     "id": "ZuHWzqkKGVo=",
     "category": "Покупка говна",
     "amount": "-95000",
+  }
+]
+````
+<br/>
+
+## **Transactions list in a month**
+### PATH
+
+> GET /{bank}/transactions/{account}
+****
+
+### DESCRIPTION
+Get transactions list in {bank} (for instance 'mono') in a month. Limit on the use of the function no more than once every 60 seconds.
+
+Response Example (200 OK)
+``` json
+[
+  {
+    "id": "TM0_tRHBTqsCe8j5",
+    "category": "Техасская мазня говной",
+    "amount": "-55000",
   }
 ]
 ````

@@ -22,6 +22,29 @@ app.get('/:bank/transactions/:account/:from/:to', async (req, res) => {
     res.send(await getTransactions(req.params.account, req.params.from, req.params.to));
 });
 
+
+app.get('/:bank/transactions/:account/', async (req, res) => {
+    
+    const date = new Date();
+
+    let dateData = {
+        year: date.getFullYear(),
+        month: date.getMonth() - 1,
+        day: date.getDate() + 1,
+    }
+
+    const newDate = new Date(dateData.year, dateData.month, dateData.day);
+
+    res.send(await getTransactions(req.params.account, Number(newDate), Number(date)));
+});
+
+app.get('/:bank/transactions/:account/', async (req, res) => {
+    const date = new Date();
+    console.log(Date.now() - date);
+    log
+    res.send(await getTransactions(req.params.account, req.params.from, req.params.to));
+});
+
 const port = process.env.PORT || 8081;
 
 app.listen(port, () => {

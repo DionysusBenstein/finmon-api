@@ -21,15 +21,20 @@ export async function getClientInfo() {
 export async function getTransactions(account, from, to) {
     const response = await fetch(`${api.baseUrl}personal/statement/${account}/${from}/${to}`, options);
     const responseBody = await response.json();
-    const transactions = [];
+    let transactions = [];
 
-    for (const item of responseBody) {
-        transactions.push({
-            id: item.id,
-            category: item.description,
-            amount: item.amount,
-        });
+
+    if ('errorDescription' in responseBody) {
+        transactions = {...responseBody};
+    } else {
+        for (const item of responseBody) {
+            transactions.push({
+                id: item.id,
+                category: item.description,
+                amount: item.amount,
+            });
+        }
     }
-
+    
     return transactions;
 }
