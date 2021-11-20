@@ -13,16 +13,15 @@ const options = {
     headers: headers,
 };
 
-export async function getClientInfo() {
+async function getClientInfo() {
     const response = await fetch(`${api.baseUrl}personal/client-info`, options);
     return await response.json();
 }
 
-export async function getTransactions(account, from, to) {
+async function getTransactions(account, from, to) {
     const response = await fetch(`${api.baseUrl}personal/statement/${account}/${from}/${to}`, options);
     const responseBody = await response.json();
     let transactions = [];
-
 
     if ('errorDescription' in responseBody) {
         transactions = {...responseBody};
@@ -39,3 +38,5 @@ export async function getTransactions(account, from, to) {
     
     return transactions;
 }
+
+export { getClientInfo, getTransactions };
