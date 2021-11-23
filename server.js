@@ -47,7 +47,6 @@ app.get('/:bank/transactions/:account/', async (req, res) => {
 app.get('/:bank/transactions/:account/', async (req, res) => {
     const date = new Date();
     console.log(Date.now() - date);
-    log
     res.send(await mono.getTransactions(req.params.account, req.params.from, req.params.to));
 });
 
