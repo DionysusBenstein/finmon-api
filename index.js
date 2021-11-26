@@ -1,7 +1,11 @@
 import express from 'express';
+import mongoose from 'mongoose';
+import authRouter from './authRouter.js';
 import * as mono from './integrations/mono.js'; 
 
 const app = express();
+
+app.use("/auth", authRouter);
 
 app.get('/', async (req, res) => {
     res.send(`
@@ -28,7 +32,6 @@ app.get('/:bank/transactions/:account/:from/:to', async (req, res) => {
     res.send(await mono.getTransactions(req.params.account, from, to));
 });
 
-
 app.get('/:bank/transactions/:account/', async (req, res) => {
     
     const date = new Date();
@@ -52,6 +55,13 @@ app.get('/:bank/transactions/:account/', async (req, res) => {
 
 const port = process.env.PORT || 8081;
 
-app.listen(port, () => {
-    console.log(`Listening on port ${port}...`);
-});
+async function start() {
+    try {
+        await mongoose.connect(`mongodb+srv://benstein:gangbang1@cluster0.dosin.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`);
+        app.listen(port, () => console.log(`Listening on port ${port}...`));
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+start();
