@@ -1,5 +1,5 @@
 import User from './models/User.js';
-import Role from './models/Plan.js';
+import Plan from './models/Plan.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { validationResult } from 'express-validator';
