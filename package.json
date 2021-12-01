@@ -14,13 +14,10 @@
     "bcryptjs": "^2.4.3",
     "express": "^4.17.1",
     "express-validator": "^6.13.0",
-    "fast-xml-parser": "^4.0.0-beta.2",
-    "js-sha1": "^0.6.0",
     "jsonwebtoken": "^8.5.1",
-    "md5": "^2.3.0",
     "mongoose": "^6.0.13",
     "node-fetch": "^3.1.0",
     "nodemon": "^2.0.15",
-    "xmlbuilder": "^15.1.1"
+    "privatbank-api": "^1.1.0"
   }
 }
