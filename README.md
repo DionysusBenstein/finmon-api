@@ -1,4 +1,10 @@
 # Finmon API
+
+### Bank integrations:
+- [x] Mono
+- [x] Privat
+- [ ] Revolut 
+
 API Endpoint
 >https://finmon-api.herokuapp.com/
 

@@ -2,6 +2,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import authRouter from './authRouter.js';
 import * as mono from './integrations/mono.js'; 
+import * as privat from './integrations/privat.js'; 
 
 const app = express();
 
