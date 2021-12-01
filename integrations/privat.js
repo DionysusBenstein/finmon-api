@@ -1,23 +1,21 @@
-import fetch, { Headers } from 'node-fetch';
-// import xmlbuilder from 'xmlbuilder';
-import { XMLParser, XMLBuilder } from 'fast-xml-parser';
-import md5 from 'md5';
-import sha1 from 'js-sha1';
+const Merchant = require('privatbank-api');
 
-const api = {
-    baseUrl: 'https://api.privatbank.ua/p24api',
+merchant = new Merchant({
+    id: '202130',
+    password: '0f5TTa5eu1W98oV07n1m29zw5WR9xxPm',
+    country: 'UA'
+});
+
+async function getClientInfo() {
+    merchant.balance('4149439317562795')
+    .then((balance) => console.log('Balance', balance));
 }
-
-function generateSignature(data, password) {
-    return sha1(md5(`${data}${password}`));
+    
+async function getTransactions(account, from, to) {
+    merchant.statement('4149439317562795', '01.01.2017', '15.03.2017')
+    .then((statements) => console.log('Statements', statements));
+    
+    return transactions;
 }
-
-const data = `<oper>cmt</oper>
-            <wait>90</wait>
-            <test>0</test>
-            <payment id="">
-                <prop name="cardnum" value="4149439317562795" />
-                <prop name="country" value="UA" />
-            </payment>`;
-
-console.log(generateSignature(data, '0f5TTa5eu1W98oV07n1m29zw5WR9xxPm'))
+    
+export { getClientInfo, getTransactions };

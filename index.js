@@ -9,7 +9,7 @@ app.use(express.json());
 app.use("/auth", authRouter);
 
 app.get('/', async (req, res) => {
-    res.send(`
+res.send(`
       <body style="font-family: Arial; text-align: center">
         <h1>Here will be docs!</h1>
         <div style="display: flex; justify-content: center;">
