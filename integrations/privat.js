@@ -1,6 +1,6 @@
-const Merchant = require('privatbank-api');
+import Merchant from 'privatbank-api';
 
-merchant = new Merchant({
+const merchant = new Merchant({
     id: '202130',
     password: '0f5TTa5eu1W98oV07n1m29zw5WR9xxPm',
     country: 'UA'
