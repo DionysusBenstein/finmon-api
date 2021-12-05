@@ -25,34 +25,37 @@ app.get('/:bank/user/info', async (req, res) => {
 });
 
 app.get('/:bank/transactions/:account/:from/:to', async (req, res) => {
-    let [fromYear, fromMonth, fromDay] = [...req.params.from.split('-')];
-    let [toYear, toMonth, toDay] = [...req.params.to.split('-')];
-
-    const from = new Date(fromYear, fromMonth - 1, fromDay).getTime();
-    const to = new Date(toYear, toMonth - 1, toDay).getTime();
+    if (req.params.bank === 'mono') {
+        let [fromYear, fromMonth, fromDay] = [...req.params.from.split('-')];
+        let [toYear, toMonth, toDay] = [...req.params.to.split('-')];
     
-    res.send(await mono.getTransactions(req.params.account, from, to));
-});
+        const from = new Date(fromYear, fromMonth - 1, fromDay).getTime();
+        const to = new Date(toYear, toMonth - 1, toDay).getTime();
+        
+        res.send(await mono.getTransactions(req.params.account, from, to));
+    } else if (req.params.bank === 'privat') {
+        const from = req.params.from.split('-').reverse().join('.');
+        const to = req.params.to.split('-').reverse().join('.');
 
-app.get('/:bank/transactions/:account/', async (req, res) => {
-    
-    const date = new Date();
-
-    let dateData = {
-        year: date.getFullYear(),
-        month: date.getMonth() - 1,
-        day: date.getDate() + 1,
+        res.send(await privat.getTransactions(req.params.account, from, to));
     }
-
-    const newDate = new Date(dateData.year, dateData.month, dateData.day);
-
-    res.send(await mono.getTransactions(req.params.account, Number(newDate), Number(date)));
 });
 
 app.get('/:bank/transactions/:account/', async (req, res) => {
     const date = new Date();
-    console.log(Date.now() - date);
-    res.send(await mono.getTransactions(req.params.account, req.params.from, req.params.to));
+
+    if (req.params.bank === 'mono') {
+        const dateTo = new Date();
+        date.setMonth(date.getMonth() - 1);
+
+        res.send(await mono.getTransactions(req.params.account, date.getTime(), dateTo.getTime()));
+    } else if (req.params.bank === 'privat') {
+        const dateTo = date.toISOString().substring(0, 10).split('-').reverse().join('.');
+        date.setMonth(date.getMonth() - 1);
+        const dateFrom = date.toISOString().substring(0, 10).split('-').reverse().join('.');
+
+        res.send(await privat.getTransactions(req.params.account, dateFrom, dateTo));
+    }
 });
 
 const port = process.env.PORT || 8081;

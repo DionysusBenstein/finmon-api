@@ -5,7 +5,7 @@
 - [x] Privat
 - [ ] Revolut 
 
-API Endpoint
+Base URL:
 > http://finmonapi-env.eba-ndgcrque.us-east-2.elasticbeanstalk.com/
 
 ## **Client information**

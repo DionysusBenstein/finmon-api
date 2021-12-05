@@ -6,16 +6,16 @@ const merchant = new Merchant({
     country: 'UA'
 });
 
-async function getClientInfo() {
-    merchant.balance('4149439317562795')
-    .then((balance) => console.log('Balance', balance));
+async function getClientInfo(account) {
+    const balance = await merchant.balance('4149439317562795')
+    return balance;
 }
-    
+// 4149439317562795
 async function getTransactions(account, from, to) {
-    merchant.statement('4149439317562795', '01.01.2017', '15.03.2017')
-    .then((statements) => console.log('Statements', statements));
-    
-    return transactions;
+    console.log(from);
+    console.log(to);
+    const statements = await merchant.statement(account, from, to);
+    return statements;
 }
-    
+
 export { getClientInfo, getTransactions };
