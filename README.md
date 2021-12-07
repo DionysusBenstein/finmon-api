@@ -96,7 +96,7 @@ Body Example
   {
     "email": "Vasyan1488_Tesak@**gmail**.com",
     "password": "penisHerDavalka123",
-    "paln": "free",
+    "plan": "free",
   }
 ]
 ````
@@ -124,7 +124,7 @@ Body Example
 {
   "email": "Vasyan1488_Tesak@**gmail**.com",
   "password": "penisHerDavalka123",
-  "paln": "free",
+  "plan": "free",
 }
 ````
 
