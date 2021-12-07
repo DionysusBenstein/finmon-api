@@ -80,3 +80,63 @@ Response Example (200 OK)
   }
 ]
 ````
+
+## **User registration**
+### PATH
+
+> POST /auth/registration
+****
+
+### DESCRIPTION
+Add user to database.
+
+Body Example
+``` json
+[
+  {
+    "email": "Vasyan1488_Tesak@**gmail**.com",
+    "password": "penisHerDavalka123",
+    "paln": "free",
+  }
+]
+````
+
+Response Example (200 OK)
+``` json
+[
+  {
+    "message": "Registration success"
+  }
+]
+````
+
+## **User login**
+### PATH
+
+> POST /auth/login
+****
+
+### DESCRIPTION
+Returns auth json web tokeng.
+
+Body Example
+``` json
+[
+  {
+    "email": "Vasyan1488_Tesak@**gmail**.com",
+    "password": "penisHerDavalka123",
+    "paln": "free",
+  }
+]
+````
+
+Response Example (200 OK)
+``` json
+[
+  {
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.
+eyJpc3MiOiJ0b3B0YWwuY29tIiwiZXhwIjoxNDI2NDIwODAwLCJodHRwOi8vdG9wdGFsLmNvbS9qd3RfY2xhaW1zL2lzX2FkbWluIjp0cnVlLCJjb21wYW55IjoiVG9wdGFsIiwiYXdlc29tZSI6dHJ1ZX0.
+yRQYnWzskCZUxPwaQupWkiUzKELZ49eM7oWxAQK_ZXw"
+  }
+]
+````

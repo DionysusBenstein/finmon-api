@@ -1,5 +1,4 @@
 import User from './models/User.js';
-import Plan from './models/Plan.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { validationResult } from 'express-validator';
@@ -68,8 +67,11 @@ class authController {
 
     async getUsers(req, res) {
         try {
-            const users = await User.find();
-            res.json(users);
+            const user = new User();
+            await user.save();
+
+            // const users = await User.find();
+            // res.json(users);
         } catch (e) {
             console.log(e);
         }
