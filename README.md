@@ -80,6 +80,7 @@ Response Example (200 OK)
   }
 ]
 ````
+<br/>
 
 ## **User registration**
 ### PATH
@@ -92,23 +93,20 @@ Add user to database.
 
 Body Example
 ``` json
-[
-  {
-    "email": "Vasyan1488_Tesak@**gmail**.com",
-    "password": "penisHerDavalka123",
-    "plan": "free",
-  }
-]
+{
+  "email": "Vasyan1488_Tesak@**gmail**.com",
+  "password": "penisHerDavalka123",
+  "plan": "free",
+}
 ````
 
 Response Example (200 OK)
 ``` json
-[
-  {
-    "message": "Registration success"
-  }
-]
+{
+  "message": "Registration success"
+}
 ````
+<br/>
 
 ## **User login**
 ### PATH
@@ -136,3 +134,27 @@ Response Example (200 OK)
             yRQYnWzskCZUxPwaQupWkiUzKELZ49eM7oWxAQK_ZXw"
 }
 ````
+<br/>
+
+## **Get all users**
+### PATH
+
+> GET /auth/users
+****
+
+### DESCRIPTION
+Recive list of all users from database.
+
+Response Example (200 OK)
+``` json
+[
+  {
+    "_id": "61b086d44c53b516038a393d",
+    "email": "lilDebil@gmail.hui",
+    "password": "$2a$10$Ga3GJogmZ4SbRcufhLHn8.cua7THOx9agbADevCEbrQAUM2vbAucK",
+    "plan": "SUPER DOROGO",
+    "__v": 0
+  }
+]
+````
+
