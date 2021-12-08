@@ -6,10 +6,7 @@ import secretKey from '../config.js';
 
 function generateAccessToken(id, plan) {
     const { secret } = secretKey;    
-    const payload = {
-        id,
-        plan
-    };
+    const payload = { id, plan };
 
     return jwt.sign(payload, secret, { expiresIn: '24h' });
 }
