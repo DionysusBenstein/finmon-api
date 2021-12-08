@@ -30,7 +30,7 @@ class authController {
                 return res.status(400).json({ message: 'Email already exist' });
             }
 
-            const hashPassword = bcrypt.hashSync(password,  );
+            const hashPassword = bcrypt.hashSync(password, 7);
             const user = new User({ email, password: hashPassword, plan });
 
             await user.save();
