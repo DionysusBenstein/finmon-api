@@ -1,62 +1,11 @@
 import express from 'express';
 import mongoose from 'mongoose';
-import authRouter from './authRouter.js';
-import * as mono from './integrations/mono.js'; 
-import * as privat from './integrations/privat.js'; 
+import router from './routes/index.js';
 
 const app = express();
 
 app.use(express.json());
-app.use("/auth", authRouter);
-
-app.get('/', async (req, res) => {
-res.send(`
-      <body style="font-family: Arial; text-align: center">
-        <h1>Docs will be here! v${process.env.npm_package_version}</h1>
-        <div style="display: flex; justify-content: center;">
-          <img src="https://raw.githubusercontent.com/DionysusBenstein/Hasbik/master/hasbik.jpg">
-        </div>
-      </body>
-    `);
-});
-
-app.get('/:bank/user/info', async (req, res) => {
-    res.send(await mono.getClientInfo());
-});
-
-app.get('/:bank/transactions/:account/:from/:to', async (req, res) => {
-    if (req.params.bank === 'mono') {
-        let [fromYear, fromMonth, fromDay] = [...req.params.from.split('-')];
-        let [toYear, toMonth, toDay] = [...req.params.to.split('-')];
-    
-        const from = new Date(fromYear, fromMonth - 1, fromDay).getTime();
-        const to = new Date(toYear, toMonth - 1, toDay).getTime();
-        
-        res.send(await mono.getTransactions(req.params.account, from, to));
-    } else if (req.params.bank === 'privat') {
-        const from = req.params.from.split('-').reverse().join('.');
-        const to = req.params.to.split('-').reverse().join('.');
-
-        res.send(await privat.getTransactions(req.params.account, from, to));
-    }
-});
-
-app.get('/:bank/transactions/:account/', async (req, res) => {
-    const date = new Date();
-
-    if (req.params.bank === 'mono') {
-        const dateTo = new Date();
-        date.setMonth(date.getMonth() - 1);
-
-        res.send(await mono.getTransactions(req.params.account, date.getTime(), dateTo.getTime()));
-    } else if (req.params.bank === 'privat') {
-        const dateTo = date.toISOString().substring(0, 10).split('-').reverse().join('.');
-        date.setMonth(date.getMonth() - 1);
-        const dateFrom = date.toISOString().substring(0, 10).split('-').reverse().join('.');
-
-        res.send(await privat.getTransactions(req.params.account, dateFrom, dateTo));
-    }
-});
+app.use('/', router);
 
 const port = process.env.PORT || 8081;
 
