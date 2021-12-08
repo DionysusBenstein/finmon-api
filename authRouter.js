@@ -1,15 +1,16 @@
 import { Router } from 'express';
 import { check } from 'express-validator';
 import controller from './authController.js';
+import authMiddleware from './middleware/authMiddleware.js';
 
 const router = new Router();
 
 router.post('/registration', [
-    check('email', "Enter email").notEmpty(),
-    check('password', "Пароль должен быть больше 6 и меньше 10 символов").isLength({ min: 6, max: 10 })
+    check('email', 'Email can\'t be empty.').notEmpty(),
+    check('password', 'Password must be more than 6 and less than 20 characters.').isLength({ min: 6, max: 20 })
 ], controller.registration);
 
 router.post('/login', controller.login);
-router.get('/users', controller.getUsers);
+router.get('/users', authMiddleware, controller.getUsers);
 
 export default router;
