@@ -12,7 +12,7 @@ Base URL:
 
 ### PATH
 
-> GET /{bank}/user/info
+> GET /banks/{bank}/user/info
 
 
 ### DESCRIPTION
@@ -41,7 +41,7 @@ Response Example (200 OK)
 ## **Transactions list**
 ### PATH
 
-> GET /{bank}/transactions/{account}/{from}/{to}
+> GET /banks/{bank}/transactions/{account}/{from}/{to}
 ****
 
 ### DESCRIPTION
@@ -63,7 +63,7 @@ Response Example (200 OK)
 ## **Transactions list in a month**
 ### PATH
 
-> GET /{bank}/transactions/{account}
+> GET /banks/{bank}/transactions/{account}
 ****
 
 ### DESCRIPTION
