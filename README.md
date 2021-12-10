@@ -1,9 +1,9 @@
 # Finmon API
 
 ### Bank integrations:
-- [x] Mono
-- [x] Privat
-- [ ] Revolut 
+- [x] mono
+- [x] privat
+- [ ] revolut 
 
 Base URL:
 > http://finmonapi-env.eba-ndgcrque.us-east-2.elasticbeanstalk.com/
@@ -54,7 +54,7 @@ Response Example (200 OK)
     "id": "ZuHWzqkKGVo=",
     "time": 1554466347,
     "category": "Покупка говна",
-    "amount": "-95000",
+    "amount": "-95000"
   }
 ]
 ````
@@ -76,7 +76,7 @@ Response Example (200 OK)
     "id": "TM0_tRHBTqsCe8j5",
     "time": 1554466347,
     "category": "Техасская мазня говной",
-    "amount": "-55000",
+    "amount": "-55000"
   }
 ]
 ````
@@ -94,9 +94,10 @@ Add user to database.
 Body Example
 ``` json
 {
-  "email": "Vasyan1488_Tesak@**gmail**.com",
+  "username": "Vasya Pupkin",
+  "email": "Vasyan1488_Tesak@gmail.com",
   "password": "penisHerDavalka123",
-  "plan": "free",
+  "plan": "free"
 }
 ````
 
@@ -104,6 +105,22 @@ Response Example (200 OK)
 ``` json
 {
   "message": "Registration success"
+}
+````
+Response Example (400 Bad Request)
+``` json
+{
+  "message": "Registration error",
+  "errors": {
+    "errors": [
+      {
+        "value": "1234",
+        "msg": "Password must be more than 6 and less than 20 characters.",
+        "param": "password",
+        "location": "body"
+      }
+    ]
+  }
 }
 ````
 <br/>
@@ -120,9 +137,9 @@ Returns auth json web tokeng.
 Body Example
 ``` json
 {
-  "email": "Vasyan1488_Tesak@**gmail**.com",
+  "login": "Vasyan1488_Tesak@gmail.com", // username or email address
   "password": "penisHerDavalka123",
-  "plan": "free",
+  "plan": "free"
 }
 ````
 

@@ -20,15 +20,21 @@ class authController {
                 return res.status(400).json({ message: 'Registration error', errors });
             }
 
-            const { email, password, plan } = req.body;
-            const candidate = await User.findOne({ email });
+            const { username, email, password, plan } = req.body;
+            const candidateEmail = await User.findOne({ email });
 
-            if (candidate) {
-                return res.status(400).json({ message: 'Email already exist' });
+            if (candidateEmail) {
+                return res.status(400).json({ message: 'Email already taken' });
+            }
+
+            const candidateUsername = await User.findOne({ username });
+
+            if (candidateUsername) {
+                return res.status(400).json({ message: 'Username already exist' });
             }
 
             const hashPassword = bcrypt.hashSync(password, 7);
-            const user = new User({ email, password: hashPassword, plan });
+            const user = new User({ username, email, password: hashPassword, plan });
 
             await user.save();
             return res.json({ message: 'Registration success!' });
@@ -40,11 +46,11 @@ class authController {
 
     async login(req, res) {
         try {
-            const { email, password } = req.body;
-            const user = await User.findOne({ email });
-
+            const { login, password } = req.body;
+            const user = await User.findOne({ login });
+            console.log(user);
             if (!user) {
-                return res.status(400).json({message: `User with email ${email} not found.`});
+                return res.status(400).json({message: `User ${login} not found.`});
             }
 
             const validPassword = bcrypt.compareSync(password, user.password);
