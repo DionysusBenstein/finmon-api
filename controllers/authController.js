@@ -20,7 +20,7 @@ class authController {
                 return res.status(400).json({ message: 'Registration error', errors });
             }
 
-            const { username, email, password, plan } = req.body;
+            const { username, email, password, plan, budgets } = req.body;
             const candidateEmail = await User.findOne({ email });
 
             if (candidateEmail) {
@@ -34,7 +34,7 @@ class authController {
             }
 
             const hashPassword = bcrypt.hashSync(password, 7);
-            const user = new User({ username, email, password: hashPassword, plan });
+            const user = new User({ username, email, password: hashPassword, plan, budgets });
 
             await user.save();
             return res.json({ message: 'Registration success!' });
