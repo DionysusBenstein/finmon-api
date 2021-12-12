@@ -27,9 +27,13 @@ async function getTransactions(account, from, to) {
         transactions = {...responseBody};
     } else {
         for (const item of responseBody) {
+            const date = new Date(item.time * 1000);
+            const transactionDate = date.toISOString().substring(0, 10);
+            const transactionTime = date.toISOString().substring(11, 16);
+
             transactions.push({
                 id: item.id,
-                time: item.time,
+                time: `${transactionDate} ${transactionTime}`,
                 category: item.description,
                 amount: item.amount,
             });
