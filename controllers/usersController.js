@@ -35,10 +35,27 @@ class usersController {
             return res.status(400).json({ message: `User ${username} not found.` });
         }
 
-        user.budgets.push(req.body);
-        User.findOneAndUpdate({username}, {$set:{budgets: user.budgets}}, {new: true});
+        User.findOneAndUpdate(username, { $push: { budgets: req.body } }, { new: true, upsert: true },
+            function (err, managerparent) {
+                if (err) throw err;
+                console.log(managerparent);
+            }
+        );
         
-        res.json({ message: 'Budget was added successfully!', budgets: user.budgets });
+        res.json({ message: 'Budget added successfully!' });
+    }
+
+    async removeBudget(req, res) {
+        const { username, id } = req.params;
+
+        User.findOneAndUpdate(username, { $pull: { budgets: { _id: id }}},
+            function (err, managerparent) {
+                if (err) throw err;
+                console.log(managerparent);
+            }
+        );
+        
+        res.json({ message: 'Budget removed successfully!' });
     }
 }
 
