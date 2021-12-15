@@ -37,7 +37,7 @@ class usersController {
 
         User.findOneAndUpdate(username, { $push: { budgets: req.body } }, { new: true, upsert: true },
             function (err, managerparent) {
-                if (err) throw err;
+                if (err) throw err; 
                 console.log(managerparent);
             }
         );

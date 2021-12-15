@@ -8,6 +8,8 @@ const User = new Schema({
     password: { type: String, required: true },
     plan: { type: String, required: true  },
     budgets: [{
+        name: String,
+        category: String,
         id: String,
         amount: String,
         isNotify: Boolean,
