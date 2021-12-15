@@ -32,7 +32,7 @@ async function getTransactions(account, from, to) {
 
             transactions.push({
                 id: item.id,
-                timeMillis: item.time,
+                timeMillis: item.time * 1000,
                 formatTime,
                 category: item.description,
                 amount: item.amount,
