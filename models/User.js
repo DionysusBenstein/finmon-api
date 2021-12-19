@@ -15,7 +15,13 @@ const User = new Schema({
         isNotify: Boolean,
         limit: String,
         date: String
-    }]  
+    }],
+    cryptowallets: [{
+        address: String,
+        ticker: String,
+        totalBalance: Number,
+        transactions: [ Object ]
+    }]
 });
 
 export default model('User', User);

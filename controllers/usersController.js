@@ -1,4 +1,6 @@
 import User from '../models/User.js';
+import { getWalletInfo } from '../integrations/blockchain.js';
+
 
 class usersController {
     async getUsers(req, res) {
@@ -18,7 +20,7 @@ class usersController {
     async getUserInfo(req, res) {
         const { username } = req.params;
         const user = await User.findOne({ username });
-                       
+                   
         if (!user) {
             return res.status(400).json({message: `User ${username} not found.`});
         }
@@ -35,7 +37,9 @@ class usersController {
             return res.status(400).json({ message: `User ${username} not found.` });
         }
 
-        User.findOneAndUpdate(username, { $push: { budgets: req.body } }, { new: true, upsert: true },
+        User.findOneAndUpdate(username, {
+                $push: { budgets: req.body }
+            }, { new: true, upsert: true },
             function (err, managerparent) {
                 if (err) throw err; 
                 console.log(managerparent);
@@ -48,14 +52,56 @@ class usersController {
     async removeBudget(req, res) {
         const { username, id } = req.params;
 
-        User.findOneAndUpdate(username, { $pull: { budgets: { _id: id }}},
-            function (err, managerparent) {
-                if (err) throw err;
-                console.log(managerparent);
-            }
-        );
+        User.findOneAndUpdate(username, {
+            $pull: { budgets: { _id: id }}
+        },
+        function (err, managerparent) {
+            if (err) throw err; 
+            console.log(managerparent);
+        });
         
         res.json({ message: 'Budget removed successfully!' });
+    }
+
+    async addCryptowallet(req, res) {
+        const { username } = req.params;
+        const { address } = req.body;
+        const user = await User.findOne({ username });        
+
+        for (const wallet of user.cryptowallets) {
+            if (wallet.address === address) {
+                return res.status(400).json({ message: `Address ${address} already exist` });
+            }
+        }
+
+        const walletInfo = await getWalletInfo(address);
+        const newWallet = {...req.body};
+        newWallet.totalBalance = walletInfo.final_balance;
+        newWallet.transactions = [...walletInfo.txs];
+
+        User.findOneAndUpdate(username, {
+            $push: { cryptowallets: newWallet }
+        }, { new: true, upsert: true },
+        function (err, managerparent) {
+            if (err) throw err; 
+            console.log(managerparent);
+        });       
+
+        res.json({ message: 'Cryptowallet added successfully!' });
+    }
+
+    async removeCryptowallet(req, res) {        
+        const { username, address } = req.params;
+        console.log(typeof address);
+        User.findOneAndUpdate(username, {
+            $pull: { cryptowallets: { address }}
+        },
+        function (err, managerparent) {
+            if (err) throw err; 
+            console.log(managerparent);
+        });
+        
+        res.json({ message: 'Cryptowallet removed successfully!' });
     }
 }
 
