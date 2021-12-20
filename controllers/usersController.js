@@ -51,6 +51,13 @@ class usersController {
 
     async removeBudget(req, res) {
         const { username, id } = req.params;
+        const doesBudgetExist = await User.exists({
+            username, budgets: { $elemMatch: { _id: id }}
+        });
+
+        if (!doesBudgetExist) {
+            return res.status(400).json({ message: 'Budget doesn\'t exist!' });
+        }
 
         User.findOneAndUpdate(username, {
             $pull: { budgets: { _id: id }}
@@ -66,12 +73,12 @@ class usersController {
     async addCryptowallet(req, res) {
         const { username } = req.params;
         const { address } = req.body;
-        const user = await User.findOne({ username });        
+        const doesWalletExist = await User.exists({
+            username, cryptowallets: { $elemMatch: { address }}
+        });
 
-        for (const wallet of user.cryptowallets) {
-            if (wallet.address === address) {
-                return res.status(400).json({ message: `Address ${address} already exist` });
-            }
+        if (doesWalletExist) {
+            return res.status(400).json({ message: `Address ${address} already exist` });
         }
 
         const walletInfo = await getWalletInfo(address);
@@ -92,7 +99,14 @@ class usersController {
 
     async removeCryptowallet(req, res) {        
         const { username, address } = req.params;
-        console.log(typeof address);
+        const doesWalletExist = await User.exists({
+            username, cryptowallets: { $elemMatch: { address }}
+        });
+
+        if (!doesWalletExist) {
+            return res.status(400).json({ message: `Address ${address} doesn't exist` });
+        }
+
         User.findOneAndUpdate(username, {
             $pull: { cryptowallets: { address }}
         },

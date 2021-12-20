@@ -6,3 +6,5 @@ async function getWalletInfo(address) {
 }
 
 export { getWalletInfo };
+
+
