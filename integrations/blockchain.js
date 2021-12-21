@@ -17,7 +17,13 @@ export async function getWalletInfo(address) {
         'value',
         'addr',
         'balance'
-        );
+    );
+
+    for (const transaction of walletInfo.transactions) {
+        const date = new Date(transaction.time * 1000);
+        transaction.formatTime = date.toISOString().substring(0, 16).replace('T', ' ');
+        console.log(transaction);
+    }
 
     return {
         ...walletInfo
