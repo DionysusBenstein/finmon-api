@@ -1,11 +1,13 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import router from './routes/index.js';
+import { swaggerUi, specs } from './docs.js';
 
 const app = express();
 
 app.use(express.json());
 app.use('/', router);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 app.get('/', async (req, res) => {
     res.send(`
@@ -17,6 +19,17 @@ app.get('/', async (req, res) => {
       </body>
     `);
 });
+
+// Routes
+/**
+ * @swagger
+ * /:
+ *  get:
+ *    description: Use to request all customers
+ *    responses:
+ *      '200':
+ *        description: A successful response
+ */
 
 const port = process.env.PORT || 8081;
 

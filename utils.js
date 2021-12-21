@@ -14,7 +14,7 @@ export function pick(obj, ...props) {
                     result[newPropKey] = obj[oldPropKey].map(item => pick(item, ...props));
                 } else {
                     result[newPropKey] = obj[oldPropKey];
-                }
+            }
             }
         }
     }
