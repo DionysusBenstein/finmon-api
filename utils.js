@@ -4,26 +4,15 @@ export function pick(obj, ...props) {
 
     for (const key of objKeys) {
         for (const prop of props) {
-            console.log(prop);
-            if (key === prop.split(':')[0]) {
-                if (typeof obj[key] === 'object' && !Array.isArray(obj[key])) {
-                    let [oldKey, newKey] = prop.split(':');
-                    if (!newKey) newKey = oldKey;
+            let [oldKey, newKey] = prop.split(':');
+            if (!newKey) newKey = oldKey;
 
+            if (key === oldKey) {
+                if (typeof obj[key] === 'object' && !Array.isArray(obj[key])) {
                     result[newKey] = pick(obj[oldKey], ...props);
                 } else if (Array.isArray(obj[key])) {
-                    let [oldKey, newKey] = prop.split(':');
-                    if (!newKey) newKey = oldKey;
-
-                    console.log(newKey, oldKey);
-
                     result[newKey] = obj[oldKey].map(item => pick(item, ...props));
                 } else {
-                    let [oldKey, newKey] = prop.split(':');
-                    if (!newKey) newKey = oldKey;
-
-                    console.log(newKey, oldKey);
-
                     result[newKey] = obj[oldKey];
                 }
             }
