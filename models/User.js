@@ -18,7 +18,6 @@ const User = new Schema({
     }],
     cryptowallets: [{
         address: String,
-        ticker: String,
         totalBalance: Number,
         transactions: [ Object ]
     }]

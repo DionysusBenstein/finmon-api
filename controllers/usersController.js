@@ -81,10 +81,7 @@ class usersController {
             return res.status(400).json({ message: `Address ${address} already exist` });
         }
 
-        const walletInfo = await getWalletInfo(address);
-        const newWallet = {...req.body};
-        newWallet.totalBalance = walletInfo.final_balance;
-        newWallet.transactions = [...walletInfo.txs];
+        const newWallet = await getWalletInfo(address);
 
         User.findOneAndUpdate(username, {
             $push: { cryptowallets: newWallet }

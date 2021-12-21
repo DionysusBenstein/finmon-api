@@ -4,13 +4,27 @@ export function pick(obj, ...props) {
 
     for (const key of objKeys) {
         for (const prop of props) {
-            if (key === prop) {
+            console.log(prop);
+            if (key === prop.split(':')[0]) {
                 if (typeof obj[key] === 'object' && !Array.isArray(obj[key])) {
-                    result[key] = pick(obj[key], ...props);
+                    let [oldKey, newKey] = prop.split(':');
+                    if (!newKey) newKey = oldKey;
+
+                    result[newKey] = pick(obj[oldKey], ...props);
                 } else if (Array.isArray(obj[key])) {
-                    result[key] = obj[key].map(item => pick(item, ...props));
+                    let [oldKey, newKey] = prop.split(':');
+                    if (!newKey) newKey = oldKey;
+
+                    console.log(newKey, oldKey);
+
+                    result[newKey] = obj[oldKey].map(item => pick(item, ...props));
                 } else {
-                    result[key] = obj[key];
+                    let [oldKey, newKey] = prop.split(':');
+                    if (!newKey) newKey = oldKey;
+
+                    console.log(newKey, oldKey);
+
+                    result[newKey] = obj[oldKey];
                 }
             }
         }
@@ -28,4 +42,4 @@ export function pick(obj, ...props) {
 //     }
 // }
 
-// console.log(pick(example, 'name', 'head', 'isGlassed'));
+// console.log(pick(example, 'name', 'head', 'isGlassed:isDebil'));
