@@ -16,7 +16,7 @@ const options = {
         url: 'http://localhost:8081'
       }
     ],
-  }, 
+  },
   // apis: ['./routes/*.js']
   apis: ['./index.js']
 };
