@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 import router from './routes/index.js';
 import { swaggerUi, specs } from './docs.js';
 
-const app = expres();
+const app = express();
 
 app.use(express.json());
 app.use('/', router);
