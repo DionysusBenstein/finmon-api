@@ -31,7 +31,7 @@ app.get('/', async (req, res) => {
  *        description: A successful response
  */
 
-const port = process.env.PORT || 8081;
+const port = process.env.PORT || 5000;
 
 async function start() {
     try {
