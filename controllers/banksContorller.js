@@ -1,5 +1,6 @@
 import * as mono from '../integrations/mono.js'; 
 import * as privat from '../integrations/privat.js'; 
+import * as revolut from '../integrations/revolut'; 
 
 class bankController {
     async getClientInfo (req, res) {
@@ -24,6 +25,8 @@ class bankController {
             const to = req.params.to.split('-').reverse().join('.');
     
             res.send(await privat.getTransactions(req.params.account, from, to));
+        } else if (req.params.bank === 'revolut') {
+            res.send(await revolut.getTransactions(req.params.account, from, to));
         }
     }
 

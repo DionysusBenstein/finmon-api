@@ -7,6 +7,9 @@ const User = new Schema({
     email: { type: String, unique: true, required: true },
     password: { type: String, required: true },
     plan: { type: String, required: true  },
+    transactions: [{
+        
+    }],
     budgets: [{
         name: String,
         category: String,

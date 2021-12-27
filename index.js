@@ -20,17 +20,6 @@ app.get('/', async (req, res) => {
     `);
 });
 
-// Routes
-/**
- * @swagger
- * /:
- *  get:
- *    description: Use to request all customers
- *    responses:
- *      '200':
- *        description: A successful response
- */
-
 const port = process.env.PORT || 5000;
 
 async function start() {
