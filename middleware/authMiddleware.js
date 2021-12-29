@@ -14,6 +14,13 @@ export default (req, res, next) => {
             return res.status(403).json({ message: 'User not logged in' });
         }
 
+        // TODO: Generate jwt from username
+        // const userId = getUserIdFromJwt();
+        // if (!userId.equals("some user id")) {
+        //  throw new HttpUnauthorizedException("You do not have access to edit" + 
+        //  "this resource.");
+        // }
+
         const decodedData = jwt.verify(token, secret);
         req.user = decodedData;
         next();

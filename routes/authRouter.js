@@ -10,5 +10,7 @@ router.post('/registration', [
 ], controller.registration);
 
 router.post('/login', controller.login);
+router.post('/forgot', controller.forgotPassword);
+router.post('/reset', controller.resetPassword);
 
 export default router;
