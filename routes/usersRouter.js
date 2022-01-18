@@ -1,10 +1,23 @@
 import { Router } from 'express';
+import multer from 'multer';
 import controller from '../controllers/usersController.js';
 
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'wallets_resources');
+    },
+    filename: (req, file, cb) => {
+        console.log(file);
+        cb(null, String(req.body.address));
+    }
+});
+
+const upload = multer({storage: storage});
 const router = new Router();
 
 router.get('/', controller.getUsers);
 router.get('/:username', controller.getUserInfo);
+router.post('/avatar', upload.single('avatar'), controller.uploadAvatar);
 router.patch('/:username/budget', controller.addBudget);
 router.delete('/:username/budget/:id', controller.removeBudget);
 router.patch('/:username/cryptowallet', controller.addCryptowallet);

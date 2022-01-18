@@ -1,7 +1,6 @@
 import User from '../models/User.js';
 import { getWalletInfo } from '../integrations/blockchain.js';
 
-
 class usersController {
     async getUsers(req, res) {
         try {
@@ -27,6 +26,14 @@ class usersController {
 
         user.password = undefined;
         res.json(user);
+    }
+
+    async uploadAvatar(req, res) {
+        try {
+            res.json(req.file)
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     async addBudget(req, res) {
