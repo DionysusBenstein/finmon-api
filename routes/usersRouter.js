@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import multer from 'multer';
-import controller from '../controllers/usersController.js';
+import controller from '../controller/usersController.js';
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -17,6 +17,7 @@ const router = new Router();
 
 router.get('/', controller.getUsers);
 router.get('/:username', controller.getUserInfo);
+router.get('/:username/budget', controller.getBudgetList);
 router.post('/avatar', upload.single('avatar'), controller.uploadAvatar);
 router.patch('/:username/budget', controller.addBudget);
 router.delete('/:username/budget/:id', controller.removeBudget);

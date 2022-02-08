@@ -28,6 +28,18 @@ class usersController {
         res.json(user);
     }
 
+
+    async getBudgetList(req, res) {
+        const { username } = req.params;
+        const user = await User.findOne({ username });
+                   
+        if (!user) {
+            return res.status(400).json({message: `User ${username} not found.`});
+        }
+
+        res.json(user.budgets);
+    }
+
     async uploadAvatar(req, res) {
         try {
             res.json(req.file)
