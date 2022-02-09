@@ -56,14 +56,12 @@ class usersController {
             return res.status(400).json({ message: `User ${username} not found.` });
         }
 
-        User.findOneAndUpdate(username, {
-                $push: { budgets: req.body }
-            }, { new: true, upsert: true },
-            function (err, managerparent) {
-                if (err) throw err; 
-                console.log(managerparent);
+        user.budgets.push(req.body);
+        user.save(function (err) {
+            if(err) {
+                console.error('ERROR!');
             }
-        );
+        });
         
         res.json({ message: 'Budget added successfully!' });
     }
