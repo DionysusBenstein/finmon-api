@@ -18,6 +18,7 @@ const router = new Router();
 router.get('/', controller.getUsers);
 router.get('/:username', controller.getUserInfo);
 router.get('/:username/budget', controller.getBudgetList);
+router.get('/:username/cryptowallet', controller.getCryptowalletsList);
 router.post('/avatar', upload.single('avatar'), controller.uploadAvatar);
 router.put('/:username/budget', controller.addBudget);
 router.post('/:username/budget', controller.addBudget);
