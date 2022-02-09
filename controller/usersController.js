@@ -47,7 +47,7 @@ class usersController {
             return res.status(400).json({message: `User ${username} not found.`});
         }
 
-        res.json(user.crytowallets);
+        res.json(user.cryptowallets);
     }
 
     async uploadAvatar(req, res) {
