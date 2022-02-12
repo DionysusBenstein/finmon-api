@@ -36,7 +36,11 @@ class usersController {
             return res.status(400).json({message: `User ${username} not found.`});
         }
 
-        res.json(user.budgets);
+        res.json({
+            message: 'List of budgets',
+            statusCode: 200,
+            data: user.budgets
+        });
     }
 
     async getCryptowalletsList(req, res) {
@@ -47,7 +51,11 @@ class usersController {
             return res.status(400).json({message: `User ${username} not found.`});
         }
 
-        res.json(user.cryptowallets);
+        res.json({
+            message: 'List of cryptowallets',
+            statusCode: 200,
+            data: user.cryptowallets
+        });
     }
 
     async uploadAvatar(req, res) {
@@ -78,6 +86,12 @@ class usersController {
 
     async removeBudget(req, res) {
         const { username, id } = req.params;
+        const user = await User.findOne({ username });
+
+        if (!user) {
+            return res.status(400).json({ message: `User ${username} not found.` });
+        }
+
         const doesBudgetExist = await User.exists({
             username, budgets: { $elemMatch: { _id: id }}
         });
@@ -86,20 +100,29 @@ class usersController {
             return res.status(400).json({ message: 'Budget doesn\'t exist!' });
         }
 
-        User.findOneAndUpdate(username, {
-            $pull: { budgets: { _id: id }}
-        },
-        function (err, managerparent) {
-            if (err) throw err; 
-            console.log(managerparent);
+        user.budgets.forEach((budget, index, array) => {
+            if (budget._id.toString() === id) array.splice(index, 1);
         });
-        
+
+        user.save(function (err) {
+            if(err) {
+                console.error('ERROR!');
+            }
+        });
+
         res.json({ message: 'Budget removed successfully!' });
     }
 
     async addCryptowallet(req, res) {
         const { username } = req.params;
         const { address } = req.body;
+        const user = await User.findOne({ username });
+        console.log(username, user);
+
+        if (!user) {
+            return res.status(400).json({ message: `User ${username} not found.` });
+        }
+
         const doesWalletExist = await User.exists({
             username, cryptowallets: { $elemMatch: { address }}
         });
@@ -107,36 +130,45 @@ class usersController {
         if (doesWalletExist) {
             return res.status(400).json({ message: `Address ${address} already exist` });
         }
-
+        
         const newWallet = await getWalletInfo(address);
+        console.log(newWallet);
 
-        User.findOneAndUpdate(username, {
-            $push: { cryptowallets: newWallet }
-        }, { new: true, upsert: true },
-        function (err, managerparent) {
-            if (err) throw err; 
-            console.log(managerparent);
-        });       
+        user.cryptowallets.push(newWallet);
+        console.log(user);
+        user.save(function (err) {
+            if(err) {
+                console.error('ERROR!');
+            }
+        });
 
         res.json({ message: 'Cryptowallet added successfully!' });
     }
 
-    async removeCryptowallet(req, res) {        
-        const { username, address } = req.params;
+    async removeCryptowallet(req, res) {
+        const { username, id } = req.params;
+        const user = await User.findOne({ username });
+
+        if (!user) {
+            return res.status(400).json({ message: `User ${username} not found.` });
+        }
+
         const doesWalletExist = await User.exists({
-            username, cryptowallets: { $elemMatch: { address }}
+            username, cryptowallets: { $elemMatch: { _id: id }}
         });
 
         if (!doesWalletExist) {
-            return res.status(400).json({ message: `Address ${address} doesn't exist` });
+            return res.status(400).json({ message: 'Address doesn\'t exist!' });
         }
 
-        User.findOneAndUpdate(username, {
-            $pull: { cryptowallets: { address }}
-        },
-        function (err, managerparent) {
-            if (err) throw err; 
-            console.log(managerparent);
+        user.cryptowallets.forEach((cryptowallet, index, array) => {
+            if (cryptowallet._id.toString() === id) array.splice(index, 1);
+        });
+
+        user.save(function (err) {
+            if(err) {
+                console.error('ERROR!');
+            }
         });
         
         res.json({ message: 'Cryptowallet removed successfully!' });

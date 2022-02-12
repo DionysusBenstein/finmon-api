@@ -17,13 +17,15 @@ const router = new Router();
 
 router.get('/', controller.getUsers);
 router.get('/:username', controller.getUserInfo);
+
 router.get('/:username/budget', controller.getBudgetList);
-router.get('/:username/cryptowallet', controller.getCryptowalletsList);
-router.post('/avatar', upload.single('avatar'), controller.uploadAvatar);
 router.put('/:username/budget', controller.addBudget);
-router.post('/:username/budget', controller.addBudget);
 router.delete('/:username/budget/:id', controller.removeBudget);
+
+router.get('/:username/cryptowallet', controller.getCryptowalletsList);
 router.put('/:username/cryptowallet', controller.addCryptowallet);
 router.delete('/:username/cryptowallet/:address', controller.removeCryptowallet);
+
+router.post('/avatar', upload.single('avatar'), controller.uploadAvatar);
 
 export default router;

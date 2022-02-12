@@ -61,7 +61,16 @@ class authController {
 
             const token = generateAccessToken(user._id, user.plan);
 
-            return res.json({ token });
+            return res.json({
+                user: {
+                  id: user._id,
+                  email: user.email,
+                  username: user.username
+                },
+                auth: {
+                  accessToken: token
+                }
+            });
         } catch (e) {
             console.log(e);
             res.status(400).json({ message: 'Login error' });

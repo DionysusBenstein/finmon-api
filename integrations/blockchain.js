@@ -3,7 +3,7 @@ import { pick } from '../utils.js';
 
 export async function getWalletInfo(address) {
     const response = await fetch(`https://blockchain.info/rawaddr/${address}`);
-    let walletInfo = await response.json();
+    let walletInfo = await response.json(); 
 
     walletInfo = pick(walletInfo,
         'address',
@@ -22,7 +22,6 @@ export async function getWalletInfo(address) {
     for (const transaction of walletInfo.transactions) {
         const date = new Date(transaction.time * 1000);
         transaction.formatTime = date.toISOString().substring(0, 16).replace('T', ' ');
-        console.log(transaction);
     }
 
     return {
